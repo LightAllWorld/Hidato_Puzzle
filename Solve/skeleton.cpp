@@ -59,7 +59,7 @@ private:
 int main( int argc, char* argv[] )
 {
 	/* 제너레이터에서 받아온 input.txt를 읽어서 solve를 통해 최종 완성된 Matrix를 출력
-
+	
 	인풋
 0 1 0 0
 14 -1 3 0
