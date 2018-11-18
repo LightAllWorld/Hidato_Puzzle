@@ -1,4 +1,4 @@
-//#pragma once
+#pragma once
 #include <vector>
 #include <fstream>
 #include <algorithm>
@@ -16,25 +16,21 @@ private:
 	bool finish;		  // floodfill에서 finish가 true가 되면 리턴
 
 public:
-	Solver() 
-	{
+	Solver() {
 		orderOfMat = 0;
 		indexOfMiddle = 0;
 		total = 0;
 		finish = false;
 	}
-	~Solver() 
-	{
-		for (int i = 0; i < sizeY; i++) 
-		{
+	~Solver() {
+		for (int i = 0; i < sizeY; i++) {
 			delete[] matrix[i];
 		}
 		delete[] matrix;
 	}
 
 
-	void input(ifstream &file) 
-	{
+	void input(ifstream &file) {
 		//매트릭스 파일을 읽어서 size값을 받아옴
 		//size 값으로 matrix를 2차배열로 동적할당
 		//값들을 matrix로 저장해줌
@@ -44,23 +40,17 @@ public:
 
 		file >> sizeX >> sizeY;
 		matrix = new int*[sizeY];
-		for (int i = 0; i < sizeY; i++) 
-		{
+		for (int i = 0; i < sizeY; i++) {
 			matrix[i] = new int[sizeX];
 		}
-		for (int i = 0; i < sizeY; i++) 
-		{
-			for (int j = 0; j < sizeX; j++) 
-			{
+		for (int i = 0; i < sizeY; i++) {
+			for (int j = 0; j < sizeX; j++) {
 				file >> matrix[i][j];
-				if (matrix[i][j] != -1) 
-				{
+				if (matrix[i][j] != -1) {
 					total++;
-					if (matrix[i][j] != 0) 
-					{
+					if (matrix[i][j] != 0) {
 						middle.push_back(matrix[i][j]);
-						if (matrix[i][j] == 1) 
-						{
+						if (matrix[i][j] == 1) {
 							startX = j;
 							startY = i;
 						}
@@ -72,52 +62,26 @@ public:
 	}
 
 
-	void output(ofstream &file) 
-	{
+	void output(ofstream &file) {
 		//텍스트파일로 보기좋게 출력.
-		for (int i = 0; i < sizeY; i++) 
-		{
-			for (int j = 0; j < sizeX; j++) 
-			{
+		for (int i = 0; i < sizeY; i++) {
+			for (int j = 0; j < sizeX; j++) {
+				if (matrix[i][j] == 0) {
+					file << "00 ";
+					continue;
+				}
+				else if (matrix[i][j] < 10 && matrix[i][j] > 0) {
+					file << " " << matrix[i][j] << " ";
+					continue;
+				}
 				file << matrix[i][j] << " ";
 			}
 			file << endl;
 		}
-			
+
 	}
 
 
-	bool search(int Y, int X, int middle) 
-	{
-		cout << "searching" << endl;
-
-		if (matrix[Y - 1][X] == middle)
-			return true;
-
-
-		if (matrix[Y - 1][X - 1] == middle)
-			return true;
-
-		if (matrix[Y - 1][X + 1] == middle)
-			return true;
-		if (matrix[Y][X + 1] == middle)
-			return true;
-		if (matrix[Y + 1][X + 1] == middle)
-			return true;
-		if (matrix[Y + 1][X] == middle)
-			return true;
-		if (matrix[Y + 1][X - 1] == middle)
-			return true;
-		if (matrix[Y][X - 1] == middle)
-			return true;
-		return false;
-	}
-
-	bool cTest(int Y, int X) {
-		
-		
-		return true;
-	}
 
 	void floodFill(int Y, int X) {
 		/*
@@ -136,28 +100,16 @@ public:
 		int mid;
 
 		if (finish) {					//1.  finish가 1인지 검사.(끝났는지)
-			cout << "1" << endl;
 			return;
 		}
 
 		if (Y < 0 || X < 0 || Y == sizeY || X == sizeX) {           //2.  좌표가 0 미만인지 검사(안되는지)
-			cout << "2" << endl;
 			return;
 		}
 		if (matrix[Y][X] == -1) {       //3
-			cout << "3" << endl;
 			return;
 		}
 
-		/*
-		if (orderOfMat + 2 == middle.at(indexOfMiddle)) {   // 4
-			if (!search(Y, X, middle.at(indexOfMiddle))) {
-				cout << "4" << endl;
-				return;
-			}
-			cout << "4-2" << endl;
-
-		}*/
 
 		if (matrix[Y][X] == 0) {
 			if (orderOfMat == middle.at(indexOfMiddle) - 1) {
@@ -165,49 +117,31 @@ public:
 			}
 		}
 		else if (matrix[Y][X] == middle.at(indexOfMiddle)) {
+			if (orderOfMat != middle.at(indexOfMiddle) - 1) {
+				return;
+			}
 			midf = true;
 			mid = middle.at(indexOfMiddle);
 			indexOfMiddle++;
 		}
 		else {
-			cout << "5" << endl;
 			return;
 		}
-		
-		
-
-		orderOfMat++;                    
-		matrix[Y][X] = orderOfMat;
 
 
 
-
-		
-		for (int i = 0; i < sizeY; i++) {
-			for (int j = 0; j < sizeX; j++) {
-				if (matrix[i][j] == 0) {
-					cout << "00 ";
-					continue;
-				}
-				else if (matrix[i][j] < 10 && matrix[i][j] > 0) {
-					cout << " "<< matrix[i][j] << " ";
-					continue;
-				}
-				cout << matrix[i][j] << " ";
-			}
-			cout << endl;
+		orderOfMat++;
+		if (!midf) {
+			matrix[Y][X] = orderOfMat;
 		}
-		cout << "order : " << orderOfMat << ", index :" << indexOfMiddle << endl<<endl;
-
 
 
 
 		if (orderOfMat == total) {        //현재값이 최대숫자면 끝냄
 			finish = true;
-			cout << "6" << endl;
 			return;
 		}
-		
+
 		floodFill(Y - 1, X);              // 6
 		floodFill(Y - 1, X + 1);
 		floodFill(Y, X + 1);
@@ -216,15 +150,13 @@ public:
 		floodFill(Y + 1, X - 1);
 		floodFill(Y, X - 1);
 		floodFill(Y - 1, X - 1);
-		
+
 		if (finish) {                     // 7
-			cout << "7" << endl;
 			return;
 		}
 
 		orderOfMat--;                     // 8
 		if (midf) {
-			cout << "8" << endl;
 			indexOfMiddle--;
 			matrix[Y][X] = mid;
 			return;
@@ -238,6 +170,20 @@ public:
 	void solve() {
 
 		floodFill(startY, startX);
+		for (int i = 0; i < sizeY; i++) {
+			for (int j = 0; j < sizeX; j++) {
+				if (matrix[i][j] == 0) {
+					cout << "00 ";
+					continue;
+				}
+				else if (matrix[i][j] < 10 && matrix[i][j] > 0) {
+					cout << " " << matrix[i][j] << " ";
+					continue;
+				}
+				cout << matrix[i][j] << " ";
+			}
+			cout << endl;
+		}
 
 	}
 
