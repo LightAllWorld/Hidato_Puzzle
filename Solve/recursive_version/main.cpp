@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Solver3.h"
+#include "Solver2.h"
 
 int main() {
 	ifstream in;
