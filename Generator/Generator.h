@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <ctime>
+#include <cstdlib>
 
 class Generator
 {

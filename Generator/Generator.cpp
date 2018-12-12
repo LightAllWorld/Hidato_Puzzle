@@ -1,11 +1,10 @@
 #include "Generator.h"
-#include <cstdlib>
 
 void Generator::run()
 {
 	Select_start();
 	get_RoomSize();
-	std::cout << this->roomsize << std::endl;
+	//std::cout << this->roomsize << std::endl;
 	if(Search(start_x, start_y) == 0)
 	{
 		std::cout<<"False Generator run.\n";
@@ -47,8 +46,19 @@ void Generator::Select_start()
 		1. Set starting point.
 		2. Push the point to stack.
 	*/
-	this->start_x = 1;
-	this->start_y = 0;
+	int flag;
+	for(int i = 0; i < this->row; i++){
+		for(int j = 0; j < this->col; j++){
+			if(map[i][j]==1){
+				start_y = i;
+				start_x = j;
+				flag = 1;
+				break;
+			}
+			if(flag == 1)
+				break;
+		}
+	}
 	this->map[start_y][start_x] = 1;
 	this->marked[start_y][start_x] = 1;
 }
@@ -97,9 +107,9 @@ int Generator::Search(int point_x, int point_y)
 		if ( this->map[new_y][new_x] == 0 ) continue;	// 벽인 경우 다른 방향으로
 
   	this->map[new_y][new_x] = ++this->order;
-		std::cout << "new_x :  " << new_x << std::endl;
-		std::cout << "new_y :  " << new_y << std::endl;
-		std::cout << this->order << std::endl;
+		//std::cout << "new_x :  " << new_x << std::endl;
+		//std::cout << "new_y :  " << new_y << std::endl;
+		//std::cout << this->order << std::endl;
 		path.push_back(this->order);
     this->marked[new_y][new_x] = 1;
     if( Search(new_x, new_y) ) // 끝까지 도달한 경우.
@@ -133,24 +143,27 @@ void Generator::Delete_items()
 	*/
 	// Path에서 2부터 +1(80%) or +2(20%) 하면서 delete 13이 넘으면 남기고
 	// 시작지점에서 다시 Path를 쫓아가면서 Delete?
-	int a, b;
+	int a, b, thirteen;
 
 
 	// a : 2 ~ (마지막 번호-1) 중 하나.
 	// a = rand()%(roomsize-2) + 2;
 
 	a = 2;
+	thirteen = 0;
+	srand((unsigned int)time(0));
 	while(a < roomsize){
-		srand((unsigned int)time(0));
 		b = rand()%4;
-		if(b != 0){ // 1/4의 확률로 +2
+		if(b != 0 && thirteen < 13){ // 3/4의 확률로 지움.
 			// 딜리트 a
+			thirteen++;
 			for(int i = 0; i < this->row; i++)
 				for(int j = 0; j < this->col; j++)
 					if(map[i][j] == a)
 						map[i][j] = -1;
 		}
 		a++;
+		thirteen = 0;
 	}
 }
 
