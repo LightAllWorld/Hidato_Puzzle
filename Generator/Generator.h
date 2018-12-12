@@ -24,16 +24,26 @@ public:
 			this->map[i] = new int[col];
 
 		std::cout<<row<<' '<<col<<'\n';
+		this->roomsize = 0;
 		for(int i = 0; i < row; i++)
 		{
 			for(int j = 0; j < col; j++)
 			{
 				fop>>this->map[i][j];
+				if(this->map[i][j] == 1){
+					roomsize++;
+				}
 			}
 		}
-
+		std::cout << "Before Delete Matrix" << std::endl;
+		for(int i = 0; i < this->row; i++){
+			for(int j = 0; j < this->col; j++){
+				std::cout << map[i][j] << " ";
+			}
+			std::cout << std::endl;
+		}
 		this->order = 1;
-		this->roomsize = 0;
+
 		Setting();
 	};
 	void Select_start();

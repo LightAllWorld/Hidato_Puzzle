@@ -3,7 +3,7 @@
 void Generator::run()
 {
 	Select_start();
-	get_RoomSize();
+	//get_RoomSize();
 	//std::cout << this->roomsize << std::endl;
 	if(Search(start_x, start_y) == 0)
 	{
@@ -46,7 +46,7 @@ void Generator::Select_start()
 		1. Set starting point.
 		2. Push the point to stack.
 	*/
-	int flag;
+	int flag = 0;
 	for(int i = 0; i < this->row; i++){
 		for(int j = 0; j < this->col; j++){
 			if(map[i][j]==1){
@@ -55,10 +55,11 @@ void Generator::Select_start()
 				flag = 1;
 				break;
 			}
-			if(flag == 1)
-				break;
 		}
+		if(flag == 1)
+			break;
 	}
+	std::cout << start_y << " " << start_x;
 	this->map[start_y][start_x] = 1;
 	this->marked[start_y][start_x] = 1;
 }
@@ -105,8 +106,8 @@ int Generator::Search(int point_x, int point_y)
 		if ( new_y < 0 || new_y >= this->row ) continue;
 		if ( this->marked[new_y][new_x] ) continue;		// 이미 방문한 경우 다른 방향으로
 		if ( this->map[new_y][new_x] == 0 ) continue;	// 벽인 경우 다른 방향으로
-
-  	this->map[new_y][new_x] = ++this->order;
+		this->order += 1;
+  	this->map[new_y][new_x] = this->order;
 		//std::cout << "new_x :  " << new_x << std::endl;
 		//std::cout << "new_y :  " << new_y << std::endl;
 		//std::cout << this->order << std::endl;
@@ -114,6 +115,7 @@ int Generator::Search(int point_x, int point_y)
     this->marked[new_y][new_x] = 1;
     if( Search(new_x, new_y) ) // 끝까지 도달한 경우.
       return 1;
+		this->order--;
 		this->map[new_y][new_x] = 1;
 		path.pop_back();
     this->marked[new_y][new_x] = 0;
@@ -174,16 +176,16 @@ void Generator::Save_matrix()
 	/*
 	write matrix line by line.
 	*/
-	/*
+
 	std::cout << "After Delete Matrix" << std::endl;
 	for(int i = 0; i < this->row; i++){
 		for(int j = 0; j < this->col; j++){
 			std::cout << map[i][j] << " ";
 		}
 		std::cout << std::endl;
-	}*/
+	}
 
-	std::fstream fo("test2.txt");
+	std::fstream fo("input.txt");
 
 	fo << this->row << " " << this->col;
 	fo << std::endl;
