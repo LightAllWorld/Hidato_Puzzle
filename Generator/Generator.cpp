@@ -174,12 +174,24 @@ void Generator::Save_matrix()
 	/*
 	write matrix line by line.
 	*/
+	/*
 	std::cout << "After Delete Matrix" << std::endl;
 	for(int i = 0; i < this->row; i++){
 		for(int j = 0; j < this->col; j++){
 			std::cout << map[i][j] << " ";
 		}
 		std::cout << std::endl;
+	}*/
+
+	std::fstream fo("test2.txt");
+
+	fo << this->row << " " << this->col;
+	fo << std::endl;
+	for(int i = 0; i < this->row; i++){
+		for(int j = 0; j < this->col; j++){
+			fo << map[i][j] << " ";
+		}
+		fo << std::endl;
 	}
 }
 
