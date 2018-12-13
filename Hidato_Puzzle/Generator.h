@@ -74,9 +74,9 @@ private:
 	int start_x, start_y;
 	int order;					// 순서를 매겨주는 변수.
 	int side[8][2];
-	int roomsize;
-	int thirteen;
-	int isSearch;
+	int roomsize;			// 방의크기(=1의 개수)
+	int thirteen;			// order사이에 13이상 차이가 안나도록 체크해주는 변수. 
+	int isSearch;			// path를 찾았는지 알려주는 변수.
 };
 
 #endif

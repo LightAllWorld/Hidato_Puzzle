@@ -5,6 +5,7 @@ void Generator::run()
 	//Select_start();
 	//get_RoomSize();
 	//std::cout << this->roomsize << std::endl;
+	// 스타팅 점 찾기.
 	for(int i = 0; i < this->row; i++){
 		for(int j = 0; j < this->col; j++){
 			if(map[i][j] == 1){
@@ -18,6 +19,7 @@ void Generator::run()
 		}
 		if(isSearch == 1) break;
 	}
+	// path가 안나오면 Generating 실패.
 	if(isSearch == 0){
 		std::cout<<"False Generator run.\n";
 		std::exit(1);
@@ -126,18 +128,20 @@ int Generator::Search(int point_x, int point_y)
 		//new_y = this->col + this->side[side_idx][1];
 		new_x = point_x + this->side[side_idx][0];
 		new_y = point_y + this->side[side_idx][1];
-		if ( new_x < 0 || new_x >= this->col ) continue;
-		if ( new_y < 0 || new_y >= this->row ) continue;
-		if ( this->marked[new_y][new_x] ) continue;		// 이미 방문한 경우 다른 방향으로
-		if ( this->map[new_y][new_x] == 0 ) continue;	// 벽인 경우 다른 방향으로
+		if ( new_x < 0 || new_x >= this->col ) continue; // x방향에서 맵밖으로 나간 경우
+		if ( new_y < 0 || new_y >= this->row ) continue; // y방향에서 맵밖으로 나간 경우
+		if ( this->marked[new_y][new_x] ) continue;		// 이미 방문한 경우
+		if ( this->map[new_y][new_x] == 0 ) continue;	// 벽인 경우
 		this->order += 1;
 
-		b = rand()%4;
+		b = rand()%4;		
 
-		if(b != 0 && thirteen < 13 && this->order < this->roomsize-1){
+		// 4분의 3의 확률로 -1로 매김.
+		if(b != 0 && thirteen < 13 && this->order < this->roomsize-1){	
 			this->map[new_y][new_x] = -1;
 			thirteen++;
 		}
+		// 4분의 1의 확률로 order를 매김.
 		else{
 			this->map[new_y][new_x] = this->order;
 			this->thirteen = 0;
@@ -211,6 +215,7 @@ void Generator::Save_matrix()
 	/*
 	write matrix line by line.
 	*/
+	/* input.txt파일에 Puzzle을 저장해주는 함수 */
 	std::cout << std::endl;
 	std::cout << "After Delete Matrix" << std::endl;
 	for(int i = 0; i < this->row; i++){
