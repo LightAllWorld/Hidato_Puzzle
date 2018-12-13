@@ -6,14 +6,14 @@ using namespace std;
 
 class Solver {
 private:
-	int startX, startY;   // ��������Ʈ
-	vector<int> middle;   // �߰��� �迭
-	int orderOfMat;		  // ������ǥ�� ��
-	int indexOfMiddle;	  // ���� �߰��� ����
-	int **matrix;		  // ����
-	int sizeX, sizeY;	  // ������ ������
-	int total;			  // ������ -1���� �ƴ� �� ������ ����(= ������ ����)
-	bool finish;		  // floodfill���� finish�� true�� �Ǹ� ����
+	int startX, startY;   // 시작포인트
+	vector<int> middle;   // 중간값 배열
+	int orderOfMat;		  // 현재좌표의 값
+	int indexOfMiddle;	  // 현재 중간값 순서
+	int **matrix;		  // 퍼즐
+	int sizeX, sizeY;	  // 퍼즐의 사이즈
+	int total;			  // 퍼즐의 -1값이 아닌 총 숫자의 갯수(= 마지막 숫자)
+	bool finish;		  // floodfill에서 finish가 true가 되면 리턴
 
 public:
 	Solver();

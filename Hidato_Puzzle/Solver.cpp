@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Solver::Solver()
+Solver ::Solver()
 {
 	orderOfMat = 0;
 	indexOfMiddle = 0;
@@ -14,22 +14,22 @@ Solver::Solver()
 
 Solver ::~Solver()
 {
-	for (int i = 0; i < sizeY; i++)
+	for (int i = 0; i < sizeY; i++) 
 		delete[] matrix[i];
 
 	delete[] matrix;
 }
 
-void Solver::input(ifstream &file)
+void Solver ::input(ifstream &file)
 {
-	//��Ʈ���� ������ �о size���� �޾ƿ�
-	//size ������ matrix�� 2���迭�� �����Ҵ�
-	//������ matrix�� ��������
-	//0 ���� �ƴϸ� total++ ����.
-	//�о����� �� 0, -1 ���� �ƴ� ���̸� middle�� push����
-	//middle���� ������������ ��������
+	//매트릭스 파일을 읽어서 size값을 받아옴
+	//size 값으로 matrix를 2차배열로 동적할당
+	//값들을 matrix로 저장해줌
+	//0 값이 아니면 total++ 해줌.
+	//읽어오는 중 0, -1 값이 아닌 값이면 middle에 push해줌
+	//middle값을 오름차순으로 정렬해줌
 
-	file  >> sizeY >> sizeX;
+	file >> sizeX >> sizeY;
 	matrix = new int*[sizeY];
 	for (int i = 0; i < sizeY; i++) {
 		matrix[i] = new int[sizeX];
@@ -52,9 +52,9 @@ void Solver::input(ifstream &file)
 	sort(middle.begin(), middle.end());
 }
 
-void Solver::output(ofstream &file)
+void Solver ::output(ofstream &file)
 {
-	//�ؽ�Ʈ���Ϸ� �������� ����.
+	//텍스트파일로 보기좋게 출력.
 	for (int i = 0; i < sizeY; i++) {
 		for (int j = 0; j < sizeX; j++) {
 			if (matrix[i][j] == 0) {
@@ -72,28 +72,28 @@ void Solver::output(ofstream &file)
 
 }
 
-void Solver::floodFill(int Y, int X)
+void Solver ::floodFill(int Y, int X)
 {
 	/*
-	1.  finish�� 1���� �˻�.(��������)
-	2.  ��ǥ�� 0 �̸����� �˻�(�ȵǴ���)
-	3-1 ��ǥ���� -1(��)�� �ƴ��� �˻�( ���̰ų� �߰���)
-	3-2 ���� ���尪�� 0�� �ƴϸ�(���̾ƴϸ�),
-	orderOfMat+1 ���� ���������� middle������ �˻�
-	middle���ϰ��� middle���̶��� ǥ��
-	5.  orderOfMat++, matrix[Y][X] = orderOfMat  (-1�� ���簪���� ����)
-	6.  �ٽ� floodFill �ָ���
-	7.  finish�� 1�̸� ����
-	8.  orderOfMat--, matrix[Y][X] = -1( middle���̸� �װ����� �ٽ�)
+	1.  finish가 1인지 검사.(끝났는지)
+	2.  좌표가 0 미만인지 검사(안되는지)
+	3-1 좌표값이 -1(벽)이 아닌지 검사( 벽이거나 중간값)
+	3-2 현재 노드값이 0이 아니면(벽이아니면),
+	orderOfMat+1 값이 현재순서의 middle값인지 검사
+	middle값일경우 middle값이라는 표시
+	5.  orderOfMat++, matrix[Y][X] = orderOfMat  (-1을 현재값으로 수정)
+	6.  다시 floodFill 주르륵
+	7.  finish가 1이면 리턴
+	8.  orderOfMat--, matrix[Y][X] = -1( middle값이면 그값으로 다시)
 	*/
 	bool midf = false;
 	int mid;
 
-	if (finish) {					//1.  finish�� 1���� �˻�.(��������)
+	if (finish) {					//1.  finish가 1인지 검사.(끝났는지)
 		return;
 	}
 
-	if (Y<0 || X <0 || Y == sizeY || X == sizeX) {           //2.  ��ǥ�� 0 �̸����� �˻�(�ȵǴ���)
+	if ( Y<0 || X <0 || Y == sizeY || X == sizeX) {           //2.  좌표가 0 미만인지 검사(안되는지)
 		return;
 	}
 	if (matrix[Y][X] == 0) {       //3
@@ -127,7 +127,7 @@ void Solver::floodFill(int Y, int X)
 
 
 
-	if (orderOfMat == total) {        //���簪�� �ִ����ڸ� ����
+	if (orderOfMat == total) {        //현재값이 최대숫자면 끝냄
 		finish = true;
 		return;
 	}
@@ -156,12 +156,10 @@ void Solver::floodFill(int Y, int X)
 
 }
 
-void Solver::solve()
+void Solver ::solve()
 {
 
 	floodFill(startY, startX);
-	cout << endl;
-	cout << "< Puzzle answer >" << endl;
 	for (int i = 0; i < sizeY; i++) {
 		for (int j = 0; j < sizeX; j++) {
 			if (matrix[i][j] == 0) {
