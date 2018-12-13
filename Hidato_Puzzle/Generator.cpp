@@ -8,13 +8,19 @@ void Generator::run()
 	// 스타팅 점 찾기.
 	for(int i = 0; i < this->row; i++){
 		for(int j = 0; j < this->col; j++){
+			//std::cout<<"반복문실행"<<std::endl;
 			if(map[i][j] == 1){
 				start_x = j;
 				start_y = i;
+				this->order = 1;
+				this->marked[start_y][start_x] = 1;
+				std::cout<<"map[i][j] == 1"<<std::endl;
 				if(Search(start_x, start_y) == 1){
+					//std::cout<<"Search실행"<<std::endl;
 					isSearch = 1;
 					break;
 				}
+				this->marked[start_y][start_x] = 0;
 			}
 		}
 		if(isSearch == 1) break;
@@ -24,13 +30,13 @@ void Generator::run()
 		std::cout<<"False Generator run.\n";
 		std::exit(1);
 	}
-	/*
+/*
 	if(Search(start_x, start_y) == 0)
 	{
 		std::cout<<"False Generator run.\n";
 		std::exit(1);
 	}
-	Delete_items();*/
+	//Delete_items();*/
 	Save_matrix();
 	//~Generator();
 }
@@ -84,8 +90,8 @@ void Generator::Select_start()
 	while((this->row*this->col - roomsize)--){
 		if(map[i][j] == 1)
 	}*/
-	std::cout << "Starting Point : ";
-	std::cout << start_y << " " << start_x;
+	//std::cout << "Starting Point : ";
+	//std::cout << start_y << " " << start_x;
 	//this->map[start_y][start_x] = 1;
 	this->marked[start_y][start_x] = 1;
 }
@@ -132,16 +138,17 @@ int Generator::Search(int point_x, int point_y)
 		if ( new_y < 0 || new_y >= this->row ) continue; // y방향에서 맵밖으로 나간 경우
 		if ( this->marked[new_y][new_x] ) continue;		// 이미 방문한 경우
 		if ( this->map[new_y][new_x] == 0 ) continue;	// 벽인 경우
+
 		this->order += 1;
+		//std::cout<<"order++"<< this->order << std::endl;
+		//std::cout<<"pointX : "<< new_x << std::endl;
+		//std::cout<<"pointY : "<< new_y << std::endl;
+		b = rand()%4;
 
-		b = rand()%4;		
-
-		// 4분의 3의 확률로 -1로 매김.
-		if(b != 0 && thirteen < 13 && this->order < this->roomsize-1){	
+		if(b != 0 && thirteen < 13 && this->order < this->roomsize-1){
 			this->map[new_y][new_x] = -1;
 			thirteen++;
 		}
-		// 4분의 1의 확률로 order를 매김.
 		else{
 			this->map[new_y][new_x] = this->order;
 			this->thirteen = 0;
@@ -159,6 +166,7 @@ int Generator::Search(int point_x, int point_y)
 		path.pop_back();
     this->marked[new_y][new_x] = 0;
   }
+	std::cout << "return 0" << std::endl;
   return 0;
 }
 
