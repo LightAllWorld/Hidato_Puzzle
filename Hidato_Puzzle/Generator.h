@@ -43,6 +43,8 @@ public:
 			std::cout << std::endl;
 		}
 		this->order = 1;
+		this->thirteen = 0;
+		this->isSearch = 0;
 
 		Setting();
 	};
@@ -73,6 +75,8 @@ private:
 	int order;					// 순서를 매겨주는 변수.
 	int side[8][2];
 	int roomsize;
+	int thirteen;
+	int isSearch;
 };
 
 #endif

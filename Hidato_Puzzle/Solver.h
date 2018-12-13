@@ -6,14 +6,14 @@ using namespace std;
 
 class Solver {
 private:
-	int startX, startY;   // ½ÃÀÛÆ÷ÀÎÆ®
-	vector<int> middle;   // Áß°£°ª ¹è¿­
-	int orderOfMat;		  // ÇöÀçÁÂÇ¥ÀÇ °ª
-	int indexOfMiddle;	  // ÇöÀç Áß°£°ª ¼ø¼­
-	int **matrix;		  // ÆÛÁñ
-	int sizeX, sizeY;	  // ÆÛÁñÀÇ »çÀÌÁî
-	int total;			  // ÆÛÁñÀÇ -1°ªÀÌ ¾Æ´Ñ ÃÑ ¼ýÀÚÀÇ °¹¼ö(= ¸¶Áö¸· ¼ýÀÚ)
-	bool finish;		  // floodfill¿¡¼­ finish°¡ true°¡ µÇ¸é ¸®ÅÏ
+	int startX, startY;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+	vector<int> middle;   // ï¿½ß°ï¿½ï¿½ï¿½ ï¿½è¿­
+	int orderOfMat;		  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½
+	int indexOfMiddle;	  // ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	int **matrix;		  // ï¿½ï¿½ï¿½ï¿½
+	int sizeX, sizeY;	  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	int total;			  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -1ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(= ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+	bool finish;		  // floodfillï¿½ï¿½ï¿½ï¿½ finishï¿½ï¿½ trueï¿½ï¿½ ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 public:
 	Solver();

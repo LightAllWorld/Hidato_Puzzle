@@ -2,15 +2,33 @@
 
 void Generator::run()
 {
-	Select_start();
+	//Select_start();
 	//get_RoomSize();
 	//std::cout << this->roomsize << std::endl;
+	for(int i = 0; i < this->row; i++){
+		for(int j = 0; j < this->col; j++){
+			if(map[i][j] == 1){
+				start_x = j;
+				start_y = i;
+				if(Search(start_x, start_y) == 1){
+					isSearch = 1;
+					break;
+				}
+			}
+		}
+		if(isSearch == 1) break;
+	}
+	if(isSearch == 0){
+		std::cout<<"False Generator run.\n";
+		std::exit(1);
+	}
+	/*
 	if(Search(start_x, start_y) == 0)
 	{
 		std::cout<<"False Generator run.\n";
 		std::exit(1);
 	}
-	Delete_items();
+	Delete_items();*/
 	Save_matrix();
 	//~Generator();
 }
@@ -59,8 +77,14 @@ void Generator::Select_start()
 		if(flag == 1)
 			break;
 	}
+	/*int i = rand() % this->row;
+	int j = rand() % this->col;
+	while((this->row*this->col - roomsize)--){
+		if(map[i][j] == 1)
+	}*/
+	std::cout << "Starting Point : ";
 	std::cout << start_y << " " << start_x;
-	this->map[start_y][start_x] = 1;
+	//this->map[start_y][start_x] = 1;
 	this->marked[start_y][start_x] = 1;
 }
 
@@ -91,7 +115,7 @@ int Generator::Search(int point_x, int point_y)
 	*/
   // startingPointx = 0~n
   // startingPointy = 0~m
-	int new_x, new_y;
+	int new_x, new_y, b;
 
   if ( this->order == this->roomsize )
     return 1;
@@ -107,7 +131,18 @@ int Generator::Search(int point_x, int point_y)
 		if ( this->marked[new_y][new_x] ) continue;		// 이미 방문한 경우 다른 방향으로
 		if ( this->map[new_y][new_x] == 0 ) continue;	// 벽인 경우 다른 방향으로
 		this->order += 1;
-  	this->map[new_y][new_x] = this->order;
+
+		b = rand()%4;
+
+		if(b != 0 && thirteen < 13 && this->order < this->roomsize-1){
+			this->map[new_y][new_x] = -1;
+			thirteen++;
+		}
+		else{
+			this->map[new_y][new_x] = this->order;
+			this->thirteen = 0;
+		}
+
 		//std::cout << "new_x :  " << new_x << std::endl;
 		//std::cout << "new_y :  " << new_y << std::endl;
 		//std::cout << this->order << std::endl;
@@ -176,10 +211,18 @@ void Generator::Save_matrix()
 	/*
 	write matrix line by line.
 	*/
-
+	std::cout << std::endl;
 	std::cout << "After Delete Matrix" << std::endl;
 	for(int i = 0; i < this->row; i++){
 		for(int j = 0; j < this->col; j++){
+			if (map[i][j] == 0) {
+				std::cout << "00 ";
+				continue;
+			}
+			else if (map[i][j] < 10 && map[i][j] > 0) {
+				std::cout << " " << map[i][j] << " ";
+				continue;
+			}
 			std::cout << map[i][j] << " ";
 		}
 		std::cout << std::endl;

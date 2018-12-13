@@ -12,6 +12,7 @@ int main(int argc, char const *argv[])
 	std::fstream fop("test.txt");
 	fop>>row>>col;
 
+	srand((unsigned int)time(0));
 	Generator gt(row, col, fop);
 	gt.run();
 
