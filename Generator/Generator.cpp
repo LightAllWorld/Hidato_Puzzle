@@ -15,25 +15,12 @@ void Generator::run()
 	//~Generator();
 }
 
-
 void Generator::Setting()
 {
 	this->marked = new int*[this->row];
 
 	for( int i = 0; i < this->row; i++)
 		this->marked[i] = new int[this->col];
-
-}
-
-bool Generator::Is_Marked(int new_x, int new_y, int side_idx)
-{
-	/*
-		if coordinate is already marked:
-			1) Push coordinate to stack.
-			2) return true
-		else:
-			return false
-	*/
 
 }
 
@@ -197,16 +184,3 @@ void Generator::Save_matrix()
 	}
 }
 
-// Test function
-/*
-void Generator::Display()
-{
-	std::cout<<this->row<<' '<<this->col<<'\n';
-	for(int i = 0; i < this->row; i++)
-	{
-		for(int j = 0 ; j < this->col; j++)
-			std::cout<<this->map[i][j]<<' ';
-		std::cout<<'\n';
-	}
-}
-*/

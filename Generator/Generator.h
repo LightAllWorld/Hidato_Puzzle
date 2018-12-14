@@ -11,7 +11,6 @@ class Generator
 {
 public:
 	void run();
-	bool Is_Marked(int x_pos, int y_pos, int side_idx);
 	bool Is_Empty();
 	Generator(int row, int col, std::fstream& fop):
 	row(row),
