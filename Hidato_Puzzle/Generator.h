@@ -11,8 +11,6 @@ class Generator
 {
 public:
 	void run();
-	bool Is_Marked(int x_pos, int y_pos, int side_idx);
-	bool Is_Empty();
 	Generator(int row, int col, std::fstream& fop):
 	row(row),
 	col(col),
@@ -48,13 +46,8 @@ public:
 
 		Setting();
 	};
-	void Select_start();
-	void get_RoomSize();
 	int Search(int point_x, int point_y);
-	void Print_path();
-	void Delete_items();
 	void Save_matrix();
-	void Display();
 	~Generator()
 	{
 		for(int i = 0; i < this->row; i++)
